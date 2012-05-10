@@ -64,3 +64,5 @@ window.CarnageGame.Game = class
 
     @level.renderTiles @screen, @scrollX, @scrollY
     @level.renderEntities @screen, @scrollX, @scrollY
+
+    @inputHandler.renderCursor @screen

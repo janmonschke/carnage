@@ -76,9 +76,13 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
           tile = @data[y][x]
           tile.render screen, this, x * 32, y * 32
 
+    screen.setOffset 0, 0
+
   renderEntities: (screen, scrollX, scrollY) ->
+    screen.setOffset scrollX, scrollY
     for entity in @entities
       entity.render screen
+    screen.setOffset 0, 0
 
   getRandomSpawn: ->
     spawns = []

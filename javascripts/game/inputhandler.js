@@ -29,17 +29,26 @@ window.CarnageGame.Key = (function() {
 window.CarnageGame.InputHandler = (function() {
 
   function _Class() {
-    var down, left, right, up;
+    var down, left, right, up,
+      _this = this;
     up = new CarnageGame.Key();
     down = new CarnageGame.Key();
     right = new CarnageGame.Key();
     left = new CarnageGame.Key();
+    this.mouseX = 0;
+    this.mouseY = 0;
     this.keys = {
       up: up,
       down: down,
       right: right,
       left: left
     };
+    $('canvas#game').mousemove(function(e) {
+      var offset;
+      offset = $('canvas#game').parent().offset();
+      _this.mouseX = e.pageX - offset.left;
+      return _this.mouseY = e.pageY - offset.top;
+    });
     $(document).keydown(function(e) {
       var keyCode;
       keyCode = e.keyCode;
@@ -79,11 +88,17 @@ window.CarnageGame.InputHandler = (function() {
   }
 
   _Class.prototype.isPressed = function(id) {
-    if (this.keys[id]) {
-      return this.keys[id].isPressed();
-    } else {
-      return false;
-    }
+    var _ref;
+    return ((_ref = this.keys[id]) != null ? _ref.isPressed() : void 0) || false;
+  };
+
+  _Class.prototype.renderCursor = function(screen) {
+    return screen.render(this.mouseX - 16, this.mouseY - 16, {
+      tileX: 0,
+      tileY: 32 * 3,
+      tileW: 32,
+      tileH: 32
+    });
   };
 
   return _Class;

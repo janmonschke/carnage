@@ -78,40 +78,32 @@ window.CarnageGame.Level = (function(_super) {
   };
 
   _Class.prototype.renderTiles = function(screen, scrollX, scrollY) {
-    var h, tile, w, x, xo, y, yo, _i, _ref, _results;
+    var h, tile, w, x, xo, y, yo, _i, _j, _ref, _ref1;
     w = (screen.getWidth() + 32) >> 5;
     h = (screen.getHeight() + 32) >> 5;
     xo = scrollX >> 5;
     yo = scrollY >> 5;
     screen.setOffset(scrollX, scrollY);
-    _results = [];
     for (y = _i = yo, _ref = h + yo; yo <= _ref ? _i < _ref : _i > _ref; y = yo <= _ref ? ++_i : --_i) {
-      _results.push((function() {
-        var _j, _ref1, _results1;
-        _results1 = [];
-        for (x = _j = xo, _ref1 = w + xo; xo <= _ref1 ? _j < _ref1 : _j > _ref1; x = xo <= _ref1 ? ++_j : --_j) {
-          if (this.data[y] && this.data[y][x]) {
-            tile = this.data[y][x];
-            _results1.push(tile.render(screen, this, x * 32, y * 32));
-          } else {
-            _results1.push(void 0);
-          }
+      for (x = _j = xo, _ref1 = w + xo; xo <= _ref1 ? _j < _ref1 : _j > _ref1; x = xo <= _ref1 ? ++_j : --_j) {
+        if (this.data[y] && this.data[y][x]) {
+          tile = this.data[y][x];
+          tile.render(screen, this, x * 32, y * 32);
         }
-        return _results1;
-      }).call(this));
+      }
     }
-    return _results;
+    return screen.setOffset(0, 0);
   };
 
   _Class.prototype.renderEntities = function(screen, scrollX, scrollY) {
-    var entity, _i, _len, _ref, _results;
+    var entity, _i, _len, _ref;
+    screen.setOffset(scrollX, scrollY);
     _ref = this.entities;
-    _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       entity = _ref[_i];
-      _results.push(entity.render(screen));
+      entity.render(screen);
     }
-    return _results;
+    return screen.setOffset(0, 0);
   };
 
   _Class.prototype.getRandomSpawn = function() {

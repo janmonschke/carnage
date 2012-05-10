@@ -137,4 +137,5 @@ html {
   height: 480px;
   background: #000;
   border: 2px solid rgba(255,255,255,0.10);
+  cursor: none;
 }

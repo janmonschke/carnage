@@ -69,7 +69,8 @@ window.CarnageGame.Game = (function() {
     this.scrollX = this.player.x - this.canvas[0].width / 2;
     this.scrollY = this.player.y - this.canvas[0].height / 2;
     this.level.renderTiles(this.screen, this.scrollX, this.scrollY);
-    return this.level.renderEntities(this.screen, this.scrollX, this.scrollY);
+    this.level.renderEntities(this.screen, this.scrollX, this.scrollY);
+    return this.inputHandler.renderCursor(this.screen);
   };
 
   return _Class;

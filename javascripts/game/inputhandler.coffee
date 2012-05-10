@@ -20,11 +20,20 @@ window.CarnageGame.InputHandler = class
     right = new CarnageGame.Key()
     left = new CarnageGame.Key()
 
+    @mouseX = 0
+    @mouseY = 0
+
     @keys = 
       up: up
       down: down
       right: right
       left: left
+
+    $('canvas#game').mousemove (e) =>
+      offset = $('canvas#game').parent().offset()
+
+      @mouseX = e.pageX - offset.left
+      @mouseY = e.pageY - offset.top
 
     $(document).keydown (e) ->
       keyCode = e.keyCode
@@ -50,8 +59,7 @@ window.CarnageGame.InputHandler = class
         when 39, 68
           right.release()
 
-  isPressed: (id) ->
-    if @keys[id]
-      return @keys[id].isPressed()
-    else
-      return false
+  isPressed: (id) -> @keys[id]?.isPressed() or false
+
+  renderCursor: (screen) ->
+    screen.render @mouseX - 16, @mouseY - 16, tileX: 0, tileY: 32 * 3, tileW: 32, tileH: 32
