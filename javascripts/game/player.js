@@ -14,8 +14,9 @@ window.CarnageGame.Player = (function(_super) {
 
   _Class.prototype.tileY = 64;
 
-  function _Class(game) {
+  function _Class(game, inputHandler) {
     this.game = game;
+    this.inputHandler = inputHandler;
     this.direction = 0;
     this.health = 100;
   }
@@ -25,6 +26,26 @@ window.CarnageGame.Player = (function(_super) {
     spawn = level.getRandomSpawn();
     this.x = spawn.x * 32;
     return this.y = spawn.y * 32;
+  };
+
+  _Class.prototype.tick = function() {
+    var xa, ya;
+    xa = 0;
+    ya = 0;
+    if (this.inputHandler.isPressed('up')) {
+      ya -= 2;
+    }
+    if (this.inputHandler.isPressed('left')) {
+      xa -= 2;
+    }
+    if (this.inputHandler.isPressed('right')) {
+      xa += 2;
+    }
+    if (this.inputHandler.isPressed('down')) {
+      ya += 2;
+    }
+    this.x += xa;
+    return this.y += ya;
   };
 
   _Class.prototype.render = function(screen) {

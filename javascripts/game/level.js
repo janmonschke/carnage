@@ -67,7 +67,14 @@ window.CarnageGame.Level = (function(_super) {
   };
 
   _Class.prototype.tick = function() {
-    return null;
+    var entity, _i, _len, _ref, _results;
+    _ref = this.entities;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      entity = _ref[_i];
+      _results.push(entity.tick());
+    }
+    return _results;
   };
 
   _Class.prototype.renderTiles = function(screen, scrollX, scrollY) {

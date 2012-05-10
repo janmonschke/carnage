@@ -32,6 +32,10 @@ window.CarnageGame.Screen = (function() {
     return this.context.canvas.height;
   };
 
+  _Class.prototype.clear = function() {
+    return this.context.clearRect(0, 0, this.getWidth(), this.getHeight());
+  };
+
   return _Class;
 
 })();

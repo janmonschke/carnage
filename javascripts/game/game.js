@@ -35,7 +35,8 @@ window.CarnageGame.Game = (function() {
     this.level.on('load', function(e) {
       if (e == null) {
         console.log('level loaded');
-        _this.player = new CarnageGame.Player(_this);
+        _this.inputHandler = new CarnageGame.InputHandler;
+        _this.player = new CarnageGame.Player(_this, _this.inputHandler);
         _this.player.findSpawn(_this.level);
         _this.level.add(_this.player);
         return _this.run();
@@ -64,6 +65,7 @@ window.CarnageGame.Game = (function() {
   };
 
   _Class.prototype.render = function() {
+    this.screen.clear();
     this.scrollX = this.player.x - this.canvas[0].width / 2;
     this.scrollY = this.player.y - this.canvas[0].height / 2;
     this.level.renderTiles(this.screen, this.scrollX, this.scrollY);

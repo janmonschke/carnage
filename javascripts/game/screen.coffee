@@ -22,3 +22,5 @@ window.CarnageGame.Screen = class
   setOffset: (@offsetX, @offsetY) -> null
   getWidth: -> @context.canvas.width
   getHeight: -> @context.canvas.height
+  clear: ->
+    @context.clearRect 0, 0, @getWidth(), @getHeight()
