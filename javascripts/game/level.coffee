@@ -63,14 +63,17 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
       entity.tick()
 
   renderTiles: (screen, scrollX, scrollY) ->
-    w = screen.getWidth() >> 4
-    h = screen.getHeight() >> 4
+    w = (screen.getWidth() + 32) >> 5
+    h = (screen.getHeight() + 32) >> 5
+    xo = scrollX >> 5
+    yo = scrollY >> 5
 
     screen.setOffset scrollX, scrollY
-    
-    for y in [0...h]
-      for x in [0...w]
-        if tile = @data[y][x]
+
+    for y in [yo...h + yo]
+      for x in [xo...w + xo]
+        if @data[y] and @data[y][x]
+          tile = @data[y][x]
           tile.render screen, this, x * 32, y * 32
 
   renderEntities: (screen, scrollX, scrollY) ->

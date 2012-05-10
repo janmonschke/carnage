@@ -78,17 +78,20 @@ window.CarnageGame.Level = (function(_super) {
   };
 
   _Class.prototype.renderTiles = function(screen, scrollX, scrollY) {
-    var h, tile, w, x, y, _i, _results;
-    w = screen.getWidth() >> 4;
-    h = screen.getHeight() >> 4;
+    var h, tile, w, x, xo, y, yo, _i, _ref, _results;
+    w = (screen.getWidth() + 32) >> 5;
+    h = (screen.getHeight() + 32) >> 5;
+    xo = scrollX >> 5;
+    yo = scrollY >> 5;
     screen.setOffset(scrollX, scrollY);
     _results = [];
-    for (y = _i = 0; 0 <= h ? _i < h : _i > h; y = 0 <= h ? ++_i : --_i) {
+    for (y = _i = yo, _ref = h + yo; yo <= _ref ? _i < _ref : _i > _ref; y = yo <= _ref ? ++_i : --_i) {
       _results.push((function() {
-        var _j, _results1;
+        var _j, _ref1, _results1;
         _results1 = [];
-        for (x = _j = 0; 0 <= w ? _j < w : _j > w; x = 0 <= w ? ++_j : --_j) {
-          if (tile = this.data[y][x]) {
+        for (x = _j = xo, _ref1 = w + xo; xo <= _ref1 ? _j < _ref1 : _j > _ref1; x = xo <= _ref1 ? ++_j : --_j) {
+          if (this.data[y] && this.data[y][x]) {
+            tile = this.data[y][x];
             _results1.push(tile.render(screen, this, x * 32, y * 32));
           } else {
             _results1.push(void 0);
