@@ -6,6 +6,16 @@ if (window.CarnageGame == null) {
 
 window.CarnageGame.Tile = (function() {
 
+  _Class.prototype.tileX = 0;
+
+  _Class.prototype.tileY = 0;
+
+  _Class.prototype.tileW = 1;
+
+  _Class.prototype.tileH = 1;
+
+  _Class.prototype.tile = null;
+
   function _Class() {
     null;
 
@@ -15,8 +25,8 @@ window.CarnageGame.Tile = (function() {
     return null;
   };
 
-  _Class.prototype.render = function(context, level, x, y) {
-    return null;
+  _Class.prototype.render = function(screen, level, x, y) {
+    return screen.render(x, y, this);
   };
 
   _Class.prototype.mayPass = function(level, x, y, entity) {

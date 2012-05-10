@@ -16,11 +16,21 @@ window.CarnageGame.Tiles.Wall = (function(_super) {
   __extends(_Class, _super);
 
   function _Class() {
-    _Class.__super__.constructor.call(this);
+    return _Class.__super__.constructor.apply(this, arguments);
   }
+
+  _Class.prototype.name = "Wall";
+
+  _Class.prototype.tileX = 1;
+
+  _Class.prototype.tileY = 0;
 
   _Class.prototype.mayPass = function(level, x, y, entity) {
     return false;
+  };
+
+  _Class.prototype.render = function(screen, level, x, y) {
+    return _Class.__super__.render.call(this, screen, level, x, y);
   };
 
   return _Class;

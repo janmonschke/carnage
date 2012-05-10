@@ -14,13 +14,12 @@ window.CarnageGame.Level = (function(_super) {
     var _this = this;
     this.name = name;
     this.TILES = {
-      0xFF00FF: null,
-      0x000000: CarnageGame.Tiles.Wall,
-      0xFFFFFF: CarnageGame.Tiles.Floor,
-      0x0000FF: CarnageGame.Tiles.Spawn
+      0x00000000: CarnageGame.Tiles.Wall,
+      0x00FFFFFF: CarnageGame.Tiles.Floor,
+      0x000000FF: CarnageGame.Tiles.Spawn
     };
     this.imageLoaded = false;
-    this.level = [];
+    this.data = [];
     this.image = new Image();
     this.image.src = 'maps/' + this.name;
     this.image.onload = function() {
@@ -43,27 +42,53 @@ window.CarnageGame.Level = (function(_super) {
 
 
   _Class.prototype.parseLevel = function() {
-    var data, hex, row, x, y, _i, _j, _ref, _ref1;
+    var data, hex, row, tile, x, y, _i, _j, _ref, _ref1;
     this.canvas = $('<canvas>');
-    $('body').append(this.canvas);
     this.canvas[0].width = this.image.width;
     this.canvas[0].height = this.image.height;
     this.context = this.canvas[0].getContext('2d');
     this.context.drawImage(this.image, 0, 0);
-    for (x = _i = 0, _ref = this.image.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
+    for (y = _i = 0, _ref = this.image.height; 0 <= _ref ? _i < _ref : _i > _ref; y = 0 <= _ref ? ++_i : --_i) {
       row = [];
-      for (y = _j = 0, _ref1 = this.image.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
+      for (x = _j = 0, _ref1 = this.image.width; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
         data = this.context.getImageData(x, y, 1, 1).data;
         hex = data[2] | (data[1] << 8) | (data[0] << 16);
         if (this.TILES[hex]) {
-          row.push(new this.TILES[hex](x, y));
+          tile = new this.TILES[hex](x, y);
+          row.push(tile);
         } else {
           row.push(null);
         }
       }
-      this.level.push(row);
+      this.data.push(row);
     }
     return this.emit('load');
+  };
+
+  _Class.prototype.tick = function() {
+    return null;
+  };
+
+  _Class.prototype.renderTiles = function(screen, scrollX, scrollY) {
+    var h, tile, w, x, y, _i, _results;
+    w = screen.getWidth() >> 4;
+    h = screen.getHeight() >> 4;
+    _results = [];
+    for (y = _i = 0; 0 <= h ? _i < h : _i > h; y = 0 <= h ? ++_i : --_i) {
+      _results.push((function() {
+        var _j, _results1;
+        _results1 = [];
+        for (x = _j = 0; 0 <= w ? _j < w : _j > w; x = 0 <= w ? ++_j : --_j) {
+          if (tile = this.data[y][x]) {
+            _results1.push(tile.render(screen, this, x, y));
+          } else {
+            _results1.push(void 0);
+          }
+        }
+        return _results1;
+      }).call(this));
+    }
+    return _results;
   };
 
   return _Class;

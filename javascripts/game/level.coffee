@@ -2,15 +2,15 @@ window.CarnageGame ?= {}
 window.CarnageGame.Level = class extends CarnageGame.EventEmitter
   constructor: (@name) ->
     @TILES =
-      0xFF00FF: null
-      0x000000: CarnageGame.Tiles.Wall
-      0xFFFFFF: CarnageGame.Tiles.Floor
-      0x0000FF: CarnageGame.Tiles.Spawn
+      0x00000000: CarnageGame.Tiles.Wall
+      0x00FFFFFF: CarnageGame.Tiles.Floor
+      0x000000FF: CarnageGame.Tiles.Spawn
 
     @imageLoaded = false
 
-    @level = []
+    @data = []
 
+    # load map image
     @image = new Image()
     @image.src = 'maps/' + @name
 
@@ -18,6 +18,7 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
       @imageLoaded = true
       @parseLevel()
 
+    # did the image load timeout? emit an error
     after 2000, =>
       unless @imageLoaded
         @emit 'load', new Error('File maps/' + @name + ' could not be loaded.')
@@ -29,24 +30,41 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
     to use .getImageData() to finally generate a levels hash
   ###
   parseLevel: ->
+    # create temporary level canvas
     @canvas = $('<canvas>')
-    $('body').append @canvas
     @canvas[0].width = @image.width
     @canvas[0].height = @image.height
 
+    # get context and draw level on canvas
     @context = @canvas[0].getContext '2d'
     @context.drawImage @image, 0, 0
 
-    for x in [0...@image.width]
+    for y in [0...@image.height]
       row = []
-      for y in [0...@image.height]
+      for x in [0...@image.width]
+        # get rgba data
         data = @context.getImageData(x, y, 1, 1).data
         hex = data[2] | (data[1] << 8) | (data[0] << 16)
 
+        # is there a tile for this rgba?
         if @TILES[hex]
-          row.push new @TILES[hex](x, y)
+          tile = new @TILES[hex](x, y)
+          row.push tile
         else
           row.push null
-      @level.push row
+      @data.push row
 
+    # level is loaded
     @emit 'load'
+
+  tick: ->
+    null
+
+  renderTiles: (screen, scrollX, scrollY) ->
+    w = screen.getWidth() >> 4
+    h = screen.getHeight() >> 4
+    
+    for y in [0...h]
+      for x in [0...w]
+        if tile = @data[y][x]
+          tile.render screen, this, x, y

@@ -1,13 +1,18 @@
 window.CarnageGame ?= {}
 window.CarnageGame.Tile = class
+  tileX: 0
+  tileY: 0
+  tileW: 1
+  tileH: 1
+  tile: null
   constructor: ->
     null
 
   tick: ->
     null
 
-  render: (context, level, x, y) ->
-    null
+  render: (screen, level, x, y) ->
+    screen.render x, y, this
 
   mayPass: (level, x, y, entity) ->
     true

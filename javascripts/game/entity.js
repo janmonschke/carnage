@@ -16,7 +16,7 @@ window.CarnageGame.Entity = (function() {
     return null;
   };
 
-  _Class.prototype.render = function(context) {
+  _Class.prototype.render = function(screen) {
     return null;
   };
 

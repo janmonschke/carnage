@@ -6,7 +6,7 @@ window.CarnageGame.Entity = class
   tick: ->
     null
 
-  render: (context) ->
+  render: (screen) ->
     null
 
   move: (xa, ya) ->

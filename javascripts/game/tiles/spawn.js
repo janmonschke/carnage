@@ -16,8 +16,18 @@ window.CarnageGame.Tiles.Spawn = (function(_super) {
   __extends(_Class, _super);
 
   function _Class() {
-    _Class.__super__.constructor.call(this);
+    return _Class.__super__.constructor.apply(this, arguments);
   }
+
+  _Class.prototype.name = "Spawn";
+
+  _Class.prototype.tileX = 0;
+
+  _Class.prototype.tileY = 1;
+
+  _Class.prototype.render = function(screen, level, x, y) {
+    return _Class.__super__.render.call(this, screen, level, x, y);
+  };
 
   return _Class;
 

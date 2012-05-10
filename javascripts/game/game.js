@@ -6,18 +6,63 @@ if (window.CarnageGame == null) {
 
 window.CarnageGame.Game = (function() {
 
+  _Class.prototype.MAXFPS = 60;
+
   function _Class(canvas) {
     var _this = this;
     this.canvas = canvas;
-    this.level = new CarnageGame.Level('cg_intro.map');
+    this.scrollX = 0;
+    this.scrollY = 0;
+    this.canvas[0].width = this.canvas.width();
+    this.canvas[0].height = this.canvas.height();
+    this.context = this.canvas[0].getContext('2d');
+    this.screen = new CarnageGame.Screen(this.context);
+    /*
+          Mr.doob's stats lib
+    */
+
+    this.stats = new Stats();
+    this.stats.setMode(0);
+    this.stats.domElement.style.position = 'absolute';
+    this.stats.domElement.style.top = '5px';
+    this.stats.domElement.style.left = '5px';
+    $('#canvas-wrapper').append(this.stats.domElement);
+    /*
+          Load level
+    */
+
+    this.level = new CarnageGame.Level('cg_intro.png');
     this.level.on('load', function(e) {
       if (e == null) {
-        return console.log('level loaded');
+        console.log('level loaded');
+        return _this.run();
       } else {
         return console.log(e);
       }
     });
   }
+
+  _Class.prototype.run = function() {
+    /*
+          Run game loop
+    */
+
+    var _this = this;
+    return every(1000 / this.MAXFPS, function() {
+      _this.stats.begin();
+      _this.tick();
+      _this.render();
+      return _this.stats.end();
+    });
+  };
+
+  _Class.prototype.tick = function() {
+    return this.level.tick();
+  };
+
+  _Class.prototype.render = function() {
+    return this.level.renderTiles(this.screen, this.scrollX, this.scrollY);
+  };
 
   return _Class;
 

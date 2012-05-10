@@ -122,7 +122,7 @@ html {
   height: 100%;
   background: #000;
 }
-canvas#game {
+#canvas-wrapper {
   width: 640px;
   height: 480px;
   background: #fff;
@@ -131,4 +131,10 @@ canvas#game {
   left: 50%;
   margin-left: -320px;
   margin-top: -240px;
+}
+#canvas-wrapper canvas#game {
+  width: 640px;
+  height: 480px;
+  background: #000;
+  border: 2px solid rgba(255,255,255,0.10);
 }
