@@ -98,3 +98,7 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
       @player = entity
 
     @entities.push entity
+
+  getTile: (x, y) ->
+    if @data[y]? and @data[y][x]
+      @data[y][x]

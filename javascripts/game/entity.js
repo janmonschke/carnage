@@ -14,6 +14,10 @@ window.CarnageGame.Entity = (function() {
 
   _Class.prototype.tileH = 32;
 
+  _Class.prototype.xr = -2;
+
+  _Class.prototype.yr = -2;
+
   function _Class(level) {
     this.level = level;
     null;
@@ -29,7 +33,42 @@ window.CarnageGame.Entity = (function() {
   };
 
   _Class.prototype.move = function(xa, ya) {
-    return null;
+    var stopped;
+    stopped = true;
+    if (xa !== 0 && this.mayMove(xa, 0)) {
+      stopped = false;
+    }
+    if (ya !== 0 && this.mayMove(0, ya)) {
+      return stopped = false;
+    }
+  };
+
+  _Class.prototype.mayMove = function(xa, ya) {
+    var context, stopped, tile, x0, x1, xt, y0, y1, yt, _i, _j;
+    stopped = false;
+    x0 = ((this.x + xa) - this.xr) >> 5;
+    x1 = ((this.x + xa) + this.xr + this.tileW) >> 5;
+    y0 = ((this.y + ya) - this.yr) >> 5;
+    y1 = ((this.y + ya) + this.yr + this.tileH) >> 5;
+    $('#debug').text("x0: " + x0 + ", x1: " + x1 + ", y0: " + y0 + ", y1: " + y1);
+    context = $('canvas#game')[0].getContext('2d');
+    context.fillStyle = 'rgba(255,0,0,0.5)';
+    for (yt = _i = y0; y0 <= y1 ? _i <= y1 : _i >= y1; yt = y0 <= y1 ? ++_i : --_i) {
+      for (xt = _j = x0; x0 <= x1 ? _j <= x1 : _j >= x1; xt = x0 <= x1 ? ++_j : --_j) {
+        tile = this.level.getTile(xt, yt);
+        if (tile) {
+          if (!tile.mayPass(this.level, xt, yt, this)) {
+            stopped = true;
+            return false;
+          }
+        }
+      }
+    }
+    if (stopped) {
+      return false;
+    }
+    this.x += xa;
+    return this.y += ya;
   };
 
   return _Class;

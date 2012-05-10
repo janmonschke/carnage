@@ -24,7 +24,8 @@ window.CarnageGame.Player = (function(_super) {
 
   _Class.prototype.findSpawn = function(level) {
     var spawn;
-    spawn = level.getRandomSpawn();
+    this.level = level;
+    spawn = this.level.getRandomSpawn();
     this.x = spawn.x * 32;
     return this.y = spawn.y * 32;
   };
@@ -45,8 +46,7 @@ window.CarnageGame.Player = (function(_super) {
     if (this.inputHandler.isPressed('down')) {
       ya += 2;
     }
-    this.x += xa;
-    this.y += ya;
+    this.move(xa, ya);
     mousePosition = this.inputHandler.getMousePosition();
     return this.rotation = Math.atan2(this.y + this.tileH / 2 - mousePosition.y - offsetY, this.x + this.tileW / 2 - mousePosition.x - offsetX);
   };
@@ -54,7 +54,7 @@ window.CarnageGame.Player = (function(_super) {
   _Class.prototype.render = function(screen) {
     var ctx, mousePosition;
     screen.renderWithRotation(this.x, this.y, this.rotation, this);
-    if (window.debug) {
+    if (window.debugLevel > 0) {
       mousePosition = this.inputHandler.getMousePosition();
       ctx = $('canvas#game')[0].getContext('2d');
       ctx.strokeStyle = "#ff0000";

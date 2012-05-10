@@ -129,6 +129,12 @@ window.CarnageGame.Level = (function(_super) {
     return this.entities.push(entity);
   };
 
+  _Class.prototype.getTile = function(x, y) {
+    if ((this.data[y] != null) && this.data[y][x]) {
+      return this.data[y][x];
+    }
+  };
+
   return _Class;
 
 })(CarnageGame.EventEmitter);
