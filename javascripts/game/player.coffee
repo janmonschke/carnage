@@ -5,6 +5,7 @@ window.CarnageGame.Player = class extends CarnageGame.Mob
   constructor: (@game, @inputHandler) ->
     @direction = 0
     @health = 100
+    @rotation = 0
 
   findSpawn: (level) ->
     spawn = level.getRandomSpawn()
@@ -12,7 +13,7 @@ window.CarnageGame.Player = class extends CarnageGame.Mob
     @x = spawn.x * 32
     @y = spawn.y * 32
 
-  tick: ->
+  tick: (offsetX, offsetY) ->
     xa = 0
     ya = 0
     if @inputHandler.isPressed 'up' then ya -= 2
@@ -23,5 +24,19 @@ window.CarnageGame.Player = class extends CarnageGame.Mob
     @x += xa
     @y += ya
 
+    mousePosition = @inputHandler.getMousePosition()
+    @rotation = Math.atan2(@y + @tileH / 2 - mousePosition.y - offsetY, @x + @tileW / 2 - mousePosition.x - offsetX)
+
   render: (screen) ->
-    screen.render @x, @y, this
+    screen.renderWithRotation @x, @y, @rotation, this
+
+    if window.debug
+      mousePosition = @inputHandler.getMousePosition()
+      ctx = $('canvas#game')[0].getContext('2d')
+      ctx.strokeStyle = "#ff0000"
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo @x - screen.offsetX + @tileW / 2, @y - screen.offsetY + @tileW / 2
+      ctx.lineTo mousePosition.x, mousePosition.y
+      ctx.closePath()
+      ctx.stroke()

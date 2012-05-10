@@ -61,7 +61,15 @@ window.CarnageGame.Game = (function() {
   };
 
   _Class.prototype.tick = function() {
-    return this.level.tick();
+    /*
+        # we need the screen inside the tick functions because we
+        # need to know what offsetX and offsetY are to calculate
+        # the player rotation
+        # @todo: Find a better solution for setting the rotation...
+        #        The tick function should not need to know about
+        #        the screen's offset positions
+    */
+    return this.level.tick(this.player.x - this.canvas[0].width / 2, this.player.y - this.canvas[0].height / 2);
   };
 
   _Class.prototype.render = function() {

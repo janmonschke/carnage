@@ -18,6 +18,14 @@ window.CarnageGame.Screen = (function() {
     return this.context.drawImage(this.spriteSheet, tile.tileX, tile.tileY, tile.tileW, tile.tileH, x - this.offsetX, y - this.offsetY, tile.tileW, tile.tileH);
   };
 
+  _Class.prototype.renderWithRotation = function(x, y, rotation, tile) {
+    this.context.save();
+    this.context.translate(x + tile.tileW / 2 - this.offsetX, y + tile.tileH / 2 - this.offsetY);
+    this.context.rotate(rotation);
+    this.context.drawImage(this.spriteSheet, tile.tileX, tile.tileY, tile.tileW, tile.tileH, tile.tileW / 2 * -1, tile.tileH / 2 * -1, tile.tileW, tile.tileH);
+    return this.context.restore();
+  };
+
   _Class.prototype.setOffset = function(offsetX, offsetY) {
     this.offsetX = offsetX;
     this.offsetY = offsetY;

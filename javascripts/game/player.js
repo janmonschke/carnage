@@ -19,6 +19,7 @@ window.CarnageGame.Player = (function(_super) {
     this.inputHandler = inputHandler;
     this.direction = 0;
     this.health = 100;
+    this.rotation = 0;
   }
 
   _Class.prototype.findSpawn = function(level) {
@@ -28,8 +29,8 @@ window.CarnageGame.Player = (function(_super) {
     return this.y = spawn.y * 32;
   };
 
-  _Class.prototype.tick = function() {
-    var xa, ya;
+  _Class.prototype.tick = function(offsetX, offsetY) {
+    var mousePosition, xa, ya;
     xa = 0;
     ya = 0;
     if (this.inputHandler.isPressed('up')) {
@@ -45,11 +46,25 @@ window.CarnageGame.Player = (function(_super) {
       ya += 2;
     }
     this.x += xa;
-    return this.y += ya;
+    this.y += ya;
+    mousePosition = this.inputHandler.getMousePosition();
+    return this.rotation = Math.atan2(this.y + this.tileH / 2 - mousePosition.y - offsetY, this.x + this.tileW / 2 - mousePosition.x - offsetX);
   };
 
   _Class.prototype.render = function(screen) {
-    return screen.render(this.x, this.y, this);
+    var ctx, mousePosition;
+    screen.renderWithRotation(this.x, this.y, this.rotation, this);
+    if (window.debug) {
+      mousePosition = this.inputHandler.getMousePosition();
+      ctx = $('canvas#game')[0].getContext('2d');
+      ctx.strokeStyle = "#ff0000";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(this.x - screen.offsetX + this.tileW / 2, this.y - screen.offsetY + this.tileW / 2);
+      ctx.lineTo(mousePosition.x, mousePosition.y);
+      ctx.closePath();
+      return ctx.stroke();
+    }
   };
 
   return _Class;

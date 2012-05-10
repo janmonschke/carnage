@@ -60,6 +60,6 @@ window.CarnageGame.InputHandler = class
           right.release()
 
   isPressed: (id) -> @keys[id]?.isPressed() or false
-
+  getMousePosition: -> { x: @mouseX, y: @mouseY }
   renderCursor: (screen) ->
     screen.render @mouseX - 16, @mouseY - 16, tileX: 0, tileY: 32 * 3, tileW: 32, tileH: 32

@@ -66,13 +66,13 @@ window.CarnageGame.Level = (function(_super) {
     return this.emit('load');
   };
 
-  _Class.prototype.tick = function() {
+  _Class.prototype.tick = function(scrollX, scrollY) {
     var entity, _i, _len, _ref, _results;
     _ref = this.entities;
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       entity = _ref[_i];
-      _results.push(entity.tick());
+      _results.push(entity.tick(scrollX, scrollY));
     }
     return _results;
   };

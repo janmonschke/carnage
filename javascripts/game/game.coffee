@@ -54,7 +54,15 @@ window.CarnageGame.Game = class
       @stats.end()
 
   tick: ->
-    @level.tick()
+    ###
+    # we need the screen inside the tick functions because we
+    # need to know what offsetX and offsetY are to calculate
+    # the player rotation
+    # @todo: Find a better solution for setting the rotation...
+    #        The tick function should not need to know about
+    #        the screen's offset positions
+    ###
+    @level.tick @player.x - @canvas[0].width / 2, @player.y - @canvas[0].height / 2
 
   render: ->
     @screen.clear()

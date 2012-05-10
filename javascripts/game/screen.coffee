@@ -19,6 +19,24 @@ window.CarnageGame.Screen = class
       , tile.tileW             # dw
       , tile.tileH             # dh
 
+  renderWithRotation: (x, y, rotation, tile) ->
+    @context.save()
+
+    @context.translate x + tile.tileW / 2 - @offsetX, y + tile.tileH / 2 - @offsetY
+    @context.rotate rotation
+
+    @context.drawImage @spriteSheet
+      , tile.tileX             # sx
+      , tile.tileY             # sy
+      , tile.tileW             # sw
+      , tile.tileH             # sh
+      , tile.tileW / 2 * -1           # dx
+      , tile.tileH / 2 * -1           # dy
+      , tile.tileW             # dw
+      , tile.tileH             # dh
+
+    @context.restore()
+
   setOffset: (@offsetX, @offsetY) -> null
   getWidth: -> @context.canvas.width
   getHeight: -> @context.canvas.height

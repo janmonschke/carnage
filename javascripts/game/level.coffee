@@ -58,9 +58,9 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
     # level is loaded
     @emit 'load'
 
-  tick: ->
+  tick: (scrollX, scrollY) ->
     for entity in @entities
-      entity.tick()
+      entity.tick scrollX, scrollY
 
   renderTiles: (screen, scrollX, scrollY) ->
     w = (screen.getWidth() + 32) >> 5

@@ -92,6 +92,13 @@ window.CarnageGame.InputHandler = (function() {
     return ((_ref = this.keys[id]) != null ? _ref.isPressed() : void 0) || false;
   };
 
+  _Class.prototype.getMousePosition = function() {
+    return {
+      x: this.mouseX,
+      y: this.mouseY
+    };
+  };
+
   _Class.prototype.renderCursor = function(screen) {
     return screen.render(this.mouseX - 16, this.mouseY - 16, {
       tileX: 0,
