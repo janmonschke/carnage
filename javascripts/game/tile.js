@@ -10,9 +10,9 @@ window.CarnageGame.Tile = (function() {
 
   _Class.prototype.tileY = 0;
 
-  _Class.prototype.tileW = 1;
+  _Class.prototype.tileW = 32;
 
-  _Class.prototype.tileH = 1;
+  _Class.prototype.tileH = 32;
 
   _Class.prototype.tile = null;
 

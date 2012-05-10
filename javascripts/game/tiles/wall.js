@@ -19,9 +19,7 @@ window.CarnageGame.Tiles.Wall = (function(_super) {
     return _Class.__super__.constructor.apply(this, arguments);
   }
 
-  _Class.prototype.name = "Wall";
-
-  _Class.prototype.tileX = 1;
+  _Class.prototype.tileX = 32;
 
   _Class.prototype.tileY = 0;
 

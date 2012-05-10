@@ -9,6 +9,7 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
     @imageLoaded = false
 
     @data = []
+    @entities = []
 
     # load map image
     @image = new Image()
@@ -63,8 +64,29 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
   renderTiles: (screen, scrollX, scrollY) ->
     w = screen.getWidth() >> 4
     h = screen.getHeight() >> 4
+
+    screen.setOffset scrollX, scrollY
     
     for y in [0...h]
       for x in [0...w]
         if tile = @data[y][x]
-          tile.render screen, this, x, y
+          tile.render screen, this, x * 32, y * 32
+
+  renderEntities: (screen, scrollX, scrollY) ->
+    for entity in @entities
+      entity.render screen
+
+  getRandomSpawn: ->
+    spawns = []
+    for y in [0...@data.length]
+      for x in [0...@data[y].length]
+        if @data[y][x] and @data[y][x] instanceof CarnageGame.Tiles.Spawn
+          spawns.push { x: x, y: y }
+
+    return spawns[Math.floor(Math.random() * spawns.length)]
+
+  add: (entity) ->
+    if entity instanceof CarnageGame.Player
+      @player = entity
+
+    @entities.push entity

@@ -29,6 +29,12 @@ window.CarnageGame.Game = class
     @level.on 'load', (e) =>
       unless e?
         console.log 'level loaded'
+
+        @player = new CarnageGame.Player this
+        @player.findSpawn(@level)
+
+        @level.add @player
+
         @run()
       else
         console.log e
@@ -49,4 +55,8 @@ window.CarnageGame.Game = class
     @level.tick()
 
   render: ->
+    @scrollX = @player.x - @canvas[0].width / 2
+    @scrollY = @player.y - @canvas[0].height / 2
+
     @level.renderTiles @screen, @scrollX, @scrollY
+    @level.renderEntities @screen, @scrollX, @scrollY

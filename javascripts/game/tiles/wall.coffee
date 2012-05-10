@@ -1,8 +1,7 @@
 window.CarnageGame ?= {}
 window.CarnageGame.Tiles ?= {}
 window.CarnageGame.Tiles.Wall = class extends CarnageGame.Tile
-  name: "Wall"
-  tileX: 1
+  tileX: 32
   tileY: 0
   mayPass: (level, x, y, entity) ->
     false

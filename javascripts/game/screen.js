@@ -6,16 +6,22 @@ if (window.CarnageGame == null) {
 
 window.CarnageGame.Screen = (function() {
 
-  _Class.prototype.tileSize = 32;
-
   function _Class(context) {
     this.context = context;
+    this.offsetX = 0;
+    this.offsetY = 0;
     this.spriteSheet = new Image();
     this.spriteSheet.src = "/images/sprites.png";
   }
 
   _Class.prototype.render = function(x, y, tile) {
-    return this.context.drawImage(this.spriteSheet, tile.tileX * this.tileSize, tile.tileY * this.tileSize, tile.tileW * this.tileSize, tile.tileH * this.tileSize, x * this.tileSize, y * this.tileSize, tile.tileW * this.tileSize, tile.tileH * this.tileSize);
+    return this.context.drawImage(this.spriteSheet, tile.tileX, tile.tileY, tile.tileW, tile.tileH, x - this.offsetX, y - this.offsetY, tile.tileW, tile.tileH);
+  };
+
+  _Class.prototype.setOffset = function(offsetX, offsetY) {
+    this.offsetX = offsetX;
+    this.offsetY = offsetY;
+    return null;
   };
 
   _Class.prototype.getWidth = function() {

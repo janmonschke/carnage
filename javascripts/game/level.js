@@ -20,6 +20,7 @@ window.CarnageGame.Level = (function(_super) {
     };
     this.imageLoaded = false;
     this.data = [];
+    this.entities = [];
     this.image = new Image();
     this.image.src = 'maps/' + this.name;
     this.image.onload = function() {
@@ -73,6 +74,7 @@ window.CarnageGame.Level = (function(_super) {
     var h, tile, w, x, y, _i, _results;
     w = screen.getWidth() >> 4;
     h = screen.getHeight() >> 4;
+    screen.setOffset(scrollX, scrollY);
     _results = [];
     for (y = _i = 0; 0 <= h ? _i < h : _i > h; y = 0 <= h ? ++_i : --_i) {
       _results.push((function() {
@@ -80,7 +82,7 @@ window.CarnageGame.Level = (function(_super) {
         _results1 = [];
         for (x = _j = 0; 0 <= w ? _j < w : _j > w; x = 0 <= w ? ++_j : --_j) {
           if (tile = this.data[y][x]) {
-            _results1.push(tile.render(screen, this, x, y));
+            _results1.push(tile.render(screen, this, x * 32, y * 32));
           } else {
             _results1.push(void 0);
           }
@@ -89,6 +91,40 @@ window.CarnageGame.Level = (function(_super) {
       }).call(this));
     }
     return _results;
+  };
+
+  _Class.prototype.renderEntities = function(screen, scrollX, scrollY) {
+    var entity, _i, _len, _ref, _results;
+    _ref = this.entities;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      entity = _ref[_i];
+      _results.push(entity.render(screen));
+    }
+    return _results;
+  };
+
+  _Class.prototype.getRandomSpawn = function() {
+    var spawns, x, y, _i, _j, _ref, _ref1;
+    spawns = [];
+    for (y = _i = 0, _ref = this.data.length; 0 <= _ref ? _i < _ref : _i > _ref; y = 0 <= _ref ? ++_i : --_i) {
+      for (x = _j = 0, _ref1 = this.data[y].length; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
+        if (this.data[y][x] && this.data[y][x] instanceof CarnageGame.Tiles.Spawn) {
+          spawns.push({
+            x: x,
+            y: y
+          });
+        }
+      }
+    }
+    return spawns[Math.floor(Math.random() * spawns.length)];
+  };
+
+  _Class.prototype.add = function(entity) {
+    if (entity instanceof CarnageGame.Player) {
+      this.player = entity;
+    }
+    return this.entities.push(entity);
   };
 
   return _Class;

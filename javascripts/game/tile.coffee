@@ -2,8 +2,8 @@ window.CarnageGame ?= {}
 window.CarnageGame.Tile = class
   tileX: 0
   tileY: 0
-  tileW: 1
-  tileH: 1
+  tileW: 32
+  tileH: 32
   tile: null
   constructor: ->
     null
