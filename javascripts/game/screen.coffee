@@ -5,7 +5,7 @@ window.CarnageGame.Screen = class
     @offsetY = 0
 
     @spriteSheet = new Image()
-    @spriteSheet.src = "/images/sprites.png"
+    @spriteSheet.src = "images/sprites.png"
 
   render: (x, y, tile) ->
     # render tile to context

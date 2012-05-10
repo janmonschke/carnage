@@ -11,7 +11,7 @@ window.CarnageGame.Screen = (function() {
     this.offsetX = 0;
     this.offsetY = 0;
     this.spriteSheet = new Image();
-    this.spriteSheet.src = "/images/sprites.png";
+    this.spriteSheet.src = "images/sprites.png";
   }
 
   _Class.prototype.render = function(x, y, tile) {
