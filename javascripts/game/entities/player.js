@@ -14,6 +14,8 @@ window.CarnageGame.Player = (function(_super) {
 
   _Class.prototype.tileY = 64;
 
+  _Class.prototype.speed = 3;
+
   function _Class(game, inputHandler) {
     this.game = game;
     this.inputHandler = inputHandler;
@@ -37,16 +39,16 @@ window.CarnageGame.Player = (function(_super) {
     xa = 0;
     ya = 0;
     if (this.inputHandler.isPressed('up')) {
-      ya -= 2;
+      ya -= 1;
     }
     if (this.inputHandler.isPressed('left')) {
-      xa -= 2;
+      xa -= 1;
     }
     if (this.inputHandler.isPressed('right')) {
-      xa += 2;
+      xa += 1;
     }
     if (this.inputHandler.isPressed('down')) {
-      ya += 2;
+      ya += 1;
     }
     this.move(xa, ya);
     mousePosition = this.inputHandler.getMousePosition();

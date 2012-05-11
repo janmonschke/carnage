@@ -18,6 +18,8 @@ window.CarnageGame.Entity = (function() {
 
   _Class.prototype.yr = -2;
 
+  _Class.prototype.speed = 1;
+
   function _Class(level) {
     this.level = level;
     this.removed = false;
@@ -42,6 +44,8 @@ window.CarnageGame.Entity = (function() {
 
   _Class.prototype.move = function(xa, ya) {
     var stopped;
+    xa *= this.speed;
+    ya *= this.speed;
     stopped = true;
     if (xa !== 0 && this.mayMove(xa, 0)) {
       stopped = false;

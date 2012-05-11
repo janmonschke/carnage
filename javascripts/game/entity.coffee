@@ -6,6 +6,7 @@ window.CarnageGame.Entity = class
   tileH: 32
   xr: -2 # x-distance to obstacle
   yr: -2 # y-distance to obstacle
+  speed: 1
   constructor: (@level) ->
     @removed = false
 
@@ -22,6 +23,9 @@ window.CarnageGame.Entity = class
     @removed = true
 
   move: (xa, ya) ->
+    xa *= @speed
+    ya *= @speed
+    
     stopped = true
     if xa != 0 and @mayMove(xa, 0)
       stopped = false

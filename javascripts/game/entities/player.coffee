@@ -2,6 +2,7 @@ window.CarnageGame ?= {}
 window.CarnageGame.Player = class extends CarnageGame.Mob
   tileX: 0
   tileY: 64
+  speed: 3
   constructor: (@game, @inputHandler) ->
     @direction = 0
     @health = 100
@@ -19,10 +20,10 @@ window.CarnageGame.Player = class extends CarnageGame.Mob
 
     xa = 0
     ya = 0
-    if @inputHandler.isPressed 'up' then ya -= 2
-    if @inputHandler.isPressed 'left' then xa -= 2
-    if @inputHandler.isPressed 'right' then xa += 2
-    if @inputHandler.isPressed 'down' then ya += 2
+    if @inputHandler.isPressed 'up' then ya -= 1
+    if @inputHandler.isPressed 'left' then xa -= 1
+    if @inputHandler.isPressed 'right' then xa += 1
+    if @inputHandler.isPressed 'down' then ya += 1
 
     @move xa, ya
 
