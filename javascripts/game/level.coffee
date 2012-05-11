@@ -59,8 +59,21 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
     @emit 'load'
 
   tick: (scrollX, scrollY) ->
-    for entity in @entities
+    for i in [0...@entities.length]
+      entity = @entities[i]
       entity.tick scrollX, scrollY
+
+      if entity.removed
+        @entities.splice @entities.indexOf(entity), 1
+
+        ###
+          @todo: We are accessing an internal coffeescript variable here
+                 since we need to reset the iterator after an entity has
+                 been removed... does CoffeeScript support low-level for
+                 loops in any way?
+        ###
+        i--
+        _ref = @entities.length
 
   renderTiles: (screen, scrollX, scrollY) ->
     w = (screen.getWidth() + 32) >> 5
@@ -98,6 +111,7 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
       @player = entity
 
     @entities.push entity
+    entity.init this
 
   getTile: (x, y) ->
     if @data[y]? and @data[y][x]

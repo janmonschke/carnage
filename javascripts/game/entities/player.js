@@ -20,6 +20,7 @@ window.CarnageGame.Player = (function(_super) {
     this.direction = 0;
     this.health = 100;
     this.rotation = 0;
+    this.tickCount = 0;
   }
 
   _Class.prototype.findSpawn = function(level) {
@@ -32,6 +33,7 @@ window.CarnageGame.Player = (function(_super) {
 
   _Class.prototype.tick = function(offsetX, offsetY) {
     var mousePosition, xa, ya;
+    this.tickCount++;
     xa = 0;
     ya = 0;
     if (this.inputHandler.isPressed('up')) {
@@ -48,7 +50,10 @@ window.CarnageGame.Player = (function(_super) {
     }
     this.move(xa, ya);
     mousePosition = this.inputHandler.getMousePosition();
-    return this.rotation = Math.atan2(this.y + this.tileH / 2 - mousePosition.y - offsetY, this.x + this.tileW / 2 - mousePosition.x - offsetX);
+    this.rotation = Math.atan2(this.y + this.tileH / 2 - mousePosition.y - offsetY, this.x + this.tileW / 2 - mousePosition.x - offsetX);
+    if (this.inputHandler.isPressed('shoot') && Math.round(this.tickCount % 5) === 0) {
+      return this.level.add(new CarnageGame.Entities.Bullet(this, Math.cos(this.rotation) * -1 * 10, Math.sin(this.rotation) * -1 * 10));
+    }
   };
 
   _Class.prototype.render = function(screen) {

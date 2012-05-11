@@ -67,12 +67,25 @@ window.CarnageGame.Level = (function(_super) {
   };
 
   _Class.prototype.tick = function(scrollX, scrollY) {
-    var entity, _i, _len, _ref, _results;
-    _ref = this.entities;
+    var entity, i, _i, _ref, _results;
     _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      entity = _ref[_i];
-      _results.push(entity.tick(scrollX, scrollY));
+    for (i = _i = 0, _ref = this.entities.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
+      entity = this.entities[i];
+      entity.tick(scrollX, scrollY);
+      if (entity.removed) {
+        this.entities.splice(this.entities.indexOf(entity), 1);
+        /*
+                  @todo: We are accessing an internal coffeescript variable here
+                         since we need to reset the iterator after an entity has
+                         been removed... does CoffeeScript support low-level for
+                         loops in any way?
+        */
+
+        i--;
+        _results.push(_ref = this.entities.length);
+      } else {
+        _results.push(void 0);
+      }
     }
     return _results;
   };
@@ -126,7 +139,8 @@ window.CarnageGame.Level = (function(_super) {
     if (entity instanceof CarnageGame.Player) {
       this.player = entity;
     }
-    return this.entities.push(entity);
+    this.entities.push(entity);
+    return entity.init(this);
   };
 
   _Class.prototype.getTile = function(x, y) {

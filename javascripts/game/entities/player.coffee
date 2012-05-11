@@ -6,6 +6,7 @@ window.CarnageGame.Player = class extends CarnageGame.Mob
     @direction = 0
     @health = 100
     @rotation = 0
+    @tickCount = 0
 
   findSpawn: (@level) ->
     spawn = @level.getRandomSpawn()
@@ -14,6 +15,8 @@ window.CarnageGame.Player = class extends CarnageGame.Mob
     @y = spawn.y * 32
 
   tick: (offsetX, offsetY) ->
+    @tickCount++
+
     xa = 0
     ya = 0
     if @inputHandler.isPressed 'up' then ya -= 2
@@ -25,6 +28,9 @@ window.CarnageGame.Player = class extends CarnageGame.Mob
 
     mousePosition = @inputHandler.getMousePosition()
     @rotation = Math.atan2(@y + @tileH / 2 - mousePosition.y - offsetY, @x + @tileW / 2 - mousePosition.x - offsetX)
+
+    if @inputHandler.isPressed('shoot') and Math.round(@tickCount % 5) is 0
+      @level.add new CarnageGame.Entities.Bullet(this, Math.cos(@rotation) * -1 * 10, Math.sin(@rotation) * -1 * 10)
 
   render: (screen) ->
     screen.renderWithRotation @x, @y, @rotation, this
