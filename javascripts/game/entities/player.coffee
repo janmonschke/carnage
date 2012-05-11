@@ -30,7 +30,7 @@ window.CarnageGame.Player = class extends CarnageGame.Mob
     @rotation = Math.atan2(@y + @tileH / 2 - mousePosition.y - offsetY, @x + @tileW / 2 - mousePosition.x - offsetX)
 
     if @inputHandler.isPressed('shoot') and Math.round(@tickCount % 5) is 0
-      @level.add new CarnageGame.Entities.Bullet(this, Math.cos(@rotation) * -1 * 10, Math.sin(@rotation) * -1 * 10)
+      @level.add new CarnageGame.Entities.Bullet(this, Math.cos(@rotation) * -1, Math.sin(@rotation) * -1)
 
   render: (screen) ->
     screen.renderWithRotation @x, @y, @rotation, this

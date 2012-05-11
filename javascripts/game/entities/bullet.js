@@ -27,10 +27,14 @@ window.CarnageGame.Entities.Bullet = (function(_super) {
 
   _Class.prototype.yr = 0;
 
+  _Class.prototype.speed = 10;
+
   function _Class(owner, xa, ya) {
     this.owner = owner;
     this.xa = xa;
     this.ya = ya;
+    this.xa *= 10;
+    this.ya *= 10;
     this.x = this.owner.x + this.owner.tileW / 2;
     this.y = this.owner.y + this.owner.tileH / 2;
   }

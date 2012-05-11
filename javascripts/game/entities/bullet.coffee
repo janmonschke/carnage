@@ -7,7 +7,11 @@ window.CarnageGame.Entities.Bullet = class extends CarnageGame.Entity
   tileH: 8
   xr: 0
   yr: 0
+  speed: 10
   constructor: (@owner, @xa, @ya) ->
+    @xa *= 10
+    @ya *= 10
+    
     @x = @owner.x + @owner.tileW / 2
     @y = @owner.y + @owner.tileH / 2
 

@@ -52,7 +52,7 @@ window.CarnageGame.Player = (function(_super) {
     mousePosition = this.inputHandler.getMousePosition();
     this.rotation = Math.atan2(this.y + this.tileH / 2 - mousePosition.y - offsetY, this.x + this.tileW / 2 - mousePosition.x - offsetX);
     if (this.inputHandler.isPressed('shoot') && Math.round(this.tickCount % 5) === 0) {
-      return this.level.add(new CarnageGame.Entities.Bullet(this, Math.cos(this.rotation) * -1 * 10, Math.sin(this.rotation) * -1 * 10));
+      return this.level.add(new CarnageGame.Entities.Bullet(this, Math.cos(this.rotation) * -1, Math.sin(this.rotation) * -1));
     }
   };
 
