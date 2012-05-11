@@ -55,3 +55,8 @@ window.CarnageGame.Entity = class
 
     @x += xa
     @y += ya
+
+  intersects: (x0, y0, x1, y1) ->
+    if @y + @tileH < y0 or @y > y1 or @x + @tileW < x0 or @x > x1
+      return false
+    return true

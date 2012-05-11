@@ -21,6 +21,10 @@ window.CarnageGame.Entities.Mob = (function(_super) {
     this.health = 100;
   }
 
+  _Class.prototype.hurt = function(dmg) {
+    return this.health -= dmg;
+  };
+
   return _Class;
 
 })(CarnageGame.Entity);

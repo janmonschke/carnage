@@ -81,6 +81,13 @@ window.CarnageGame.Entity = (function() {
     return this.y += ya;
   };
 
+  _Class.prototype.intersects = function(x0, y0, x1, y1) {
+    if (this.y + this.tileH < y0 || this.y > y1 || this.x + this.tileW < x0 || this.x > x1) {
+      return false;
+    }
+    return true;
+  };
+
   return _Class;
 
 })();

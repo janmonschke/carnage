@@ -120,6 +120,19 @@ window.CarnageGame.Level = (function(_super) {
     return screen.setOffset(0, 0);
   };
 
+  _Class.prototype.getEntitiesWithin = function(x0, y0, x1, y1) {
+    var entities, entity, _i, _len, _ref;
+    entities = [];
+    _ref = this.entities;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      entity = _ref[_i];
+      if (entity.intersects(x0, y0, x1, y1)) {
+        entities.push(entity);
+      }
+    }
+    return entities;
+  };
+
   _Class.prototype.getRandomSpawn = function() {
     var spawns, x, y, _i, _j, _ref, _ref1;
     spawns = [];

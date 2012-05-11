@@ -7,7 +7,7 @@ window.CarnageGame.Entities.Bullet = class extends CarnageGame.Entity
   tileH: 8
   xr: 0
   yr: 0
-  speed: 10
+  speed: 2
   constructor: (@owner, @xa, @ya) ->
     @xa *= 10
     @ya *= 10
@@ -21,6 +21,12 @@ window.CarnageGame.Entities.Bullet = class extends CarnageGame.Entity
   tick: ->
     unless @move(@xa, @ya)
       @remove()
+
+    hitEntities = @level.getEntitiesWithin @x, @y, @x + @tileW, @y + @tileH
+    for hitEntity in hitEntities
+      if (hitEntity instanceof CarnageGame.Entities.Mob) and not (hitEntity instanceof CarnageGame.Entities.Player)
+        hitEntity.hurt(1)
+        @remove()
 
   # make bullets stop on any obstacle
   move: (xa, ya) ->

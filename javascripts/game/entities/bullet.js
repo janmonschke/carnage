@@ -27,7 +27,7 @@ window.CarnageGame.Entities.Bullet = (function(_super) {
 
   _Class.prototype.yr = 0;
 
-  _Class.prototype.speed = 10;
+  _Class.prototype.speed = 2;
 
   function _Class(owner, xa, ya) {
     this.owner = owner;
@@ -42,9 +42,22 @@ window.CarnageGame.Entities.Bullet = (function(_super) {
   }
 
   _Class.prototype.tick = function() {
+    var hitEntities, hitEntity, _i, _len, _results;
     if (!this.move(this.xa, this.ya)) {
-      return this.remove();
+      this.remove();
     }
+    hitEntities = this.level.getEntitiesWithin(this.x, this.y, this.x + this.tileW, this.y + this.tileH);
+    _results = [];
+    for (_i = 0, _len = hitEntities.length; _i < _len; _i++) {
+      hitEntity = hitEntities[_i];
+      if ((hitEntity instanceof CarnageGame.Entities.Mob) && !(hitEntity instanceof CarnageGame.Entities.Player)) {
+        hitEntity.hurt(1);
+        _results.push(this.remove());
+      } else {
+        _results.push(void 0);
+      }
+    }
+    return _results;
   };
 
   _Class.prototype.move = function(xa, ya) {

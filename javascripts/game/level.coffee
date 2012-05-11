@@ -98,6 +98,15 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
       entity.render screen
     screen.setOffset 0, 0
 
+  getEntitiesWithin: (x0, y0, x1, y1) ->
+    entities = []
+
+    for entity in @entities
+      if entity.intersects(x0, y0, x1, y1)
+        entities.push entity
+
+    return entities
+
   getRandomSpawn: ->
     spawns = []
     for y in [0...@data.length]
