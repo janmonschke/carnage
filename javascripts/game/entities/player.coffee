@@ -1,5 +1,6 @@
 window.CarnageGame ?= {}
-window.CarnageGame.Player = class extends CarnageGame.Mob
+window.CarnageGame.Entities ?= {}
+window.CarnageGame.Entities.Player = class extends CarnageGame.Entities.Mob
   tileX: 0
   tileY: 64
   speed: 3

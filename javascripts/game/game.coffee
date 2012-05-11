@@ -32,10 +32,14 @@ window.CarnageGame.Game = class
 
         @inputHandler = new CarnageGame.InputHandler
 
-        @player = new CarnageGame.Player this, @inputHandler
+        @player = new CarnageGame.Entities.Player this, @inputHandler
         @player.findSpawn(@level)
 
+        enemy = new CarnageGame.Entities.Enemy this
+        enemy.findSpawn(@level)
+
         @level.add @player
+        @level.add enemy
 
         @run()
       else

@@ -11,16 +11,40 @@ if ((_base = window.CarnageGame).Entities == null) {
   _base.Entities = {};
 }
 
-window.CarnageGame.Entities.Mob = (function(_super) {
+window.CarnageGame.Entities.Enemy = (function(_super) {
 
   __extends(_Class, _super);
+
+  _Class.prototype.tileX = 0;
+
+  _Class.prototype.tileY = 64;
+
+  _Class.prototype.speed = 3;
 
   function _Class(game) {
     this.game = game;
     this.direction = 0;
     this.health = 100;
+    this.rotation = 0;
+    this.tickCount = 0;
   }
+
+  _Class.prototype.findSpawn = function(level) {
+    var spawn;
+    this.level = level;
+    spawn = this.level.getRandomSpawn();
+    this.x = spawn.x * 32;
+    return this.y = spawn.y * 32;
+  };
+
+  _Class.prototype.tick = function(offsetX, offsetY) {
+    return null;
+  };
+
+  _Class.prototype.render = function(screen) {
+    return screen.renderWithRotation(this.x, this.y, this.rotation, this);
+  };
 
   return _Class;
 
-})(CarnageGame.Entity);
+})(CarnageGame.Entities.Mob);

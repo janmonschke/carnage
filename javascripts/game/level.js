@@ -137,7 +137,7 @@ window.CarnageGame.Level = (function(_super) {
   };
 
   _Class.prototype.add = function(entity) {
-    if (entity instanceof CarnageGame.Player) {
+    if (entity instanceof CarnageGame.Entities.Player) {
       this.player = entity;
     }
     this.entities.push(entity);

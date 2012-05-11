@@ -1,5 +1,6 @@
 window.CarnageGame ?= {}
-window.CarnageGame.Mob = class extends CarnageGame.Entity
+window.CarnageGame.Entities ?= {}
+window.CarnageGame.Entities.Mob = class extends CarnageGame.Entity
   constructor: (@game) ->
     @direction = 0
     @health = 100

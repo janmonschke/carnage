@@ -108,7 +108,7 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
     return spawns[Math.floor(Math.random() * spawns.length)]
 
   add: (entity) ->
-    if entity instanceof CarnageGame.Player
+    if entity instanceof CarnageGame.Entities.Player
       @player = entity
 
     @entities.push entity
