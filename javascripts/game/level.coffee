@@ -59,6 +59,7 @@ window.CarnageGame.Level = class extends CarnageGame.EventEmitter
     @emit 'load'
 
   tick: (scrollX, scrollY) ->
+    $('#debug').text "#{@entities.length} Entities"
     for i in [0...@entities.length]
       entity = @entities[i]
       entity.tick scrollX, scrollY

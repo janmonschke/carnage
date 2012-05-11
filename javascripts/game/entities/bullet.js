@@ -35,6 +35,8 @@ window.CarnageGame.Entities.Bullet = (function(_super) {
     this.ya = ya;
     this.xa *= 10;
     this.ya *= 10;
+    this.xa += Math.random() * 3;
+    this.ya += Math.random() * 3;
     this.x = this.owner.x + this.owner.tileW / 2;
     this.y = this.owner.y + this.owner.tileH / 2;
   }

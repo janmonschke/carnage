@@ -11,7 +11,10 @@ window.CarnageGame.Entities.Bullet = class extends CarnageGame.Entity
   constructor: (@owner, @xa, @ya) ->
     @xa *= 10
     @ya *= 10
-    
+
+    @xa += Math.random() * 3
+    @ya += Math.random() * 3
+
     @x = @owner.x + @owner.tileW / 2
     @y = @owner.y + @owner.tileH / 2
 

@@ -68,6 +68,7 @@ window.CarnageGame.Level = (function(_super) {
 
   _Class.prototype.tick = function(scrollX, scrollY) {
     var entity, i, _i, _ref, _results;
+    $('#debug').text("" + this.entities.length + " Entities");
     _results = [];
     for (i = _i = 0, _ref = this.entities.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
       entity = this.entities[i];
