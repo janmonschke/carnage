@@ -33,12 +33,16 @@ window.CarnageGame.Game = (function() {
 
     this.level = new CarnageGame.Level('cg_intro.png');
     this.level.on('load', function(e) {
+      var enemy;
       if (e == null) {
         console.log('level loaded');
         _this.inputHandler = new CarnageGame.InputHandler;
-        _this.player = new CarnageGame.Player(_this, _this.inputHandler);
+        _this.player = new CarnageGame.Entities.Player(_this, _this.inputHandler);
         _this.player.findSpawn(_this.level);
+        enemy = new CarnageGame.Entities.Enemy(_this);
+        enemy.findSpawn(_this.level);
         _this.level.add(_this.player);
+        _this.level.add(enemy);
         return _this.run();
       } else {
         return console.log(e);

@@ -6,7 +6,11 @@ window.CarnageGame.Entity = class
   tileH: 32
   xr: -2 # x-distance to obstacle
   yr: -2 # y-distance to obstacle
+  speed: 1
   constructor: (@level) ->
+    @removed = false
+
+  init: (@level) ->
     null
 
   tick: ->
@@ -15,13 +19,20 @@ window.CarnageGame.Entity = class
   render: (screen) ->
     null
 
+  remove: ->
+    @removed = true
+
   move: (xa, ya) ->
+    xa *= @speed
+    ya *= @speed
+    
     stopped = true
     if xa != 0 and @mayMove(xa, 0)
       stopped = false
     if ya != 0 and @mayMove(0, ya)
       stopped = false
 
+    return !stopped
 
   mayMove: (xa, ya) ->
     stopped = false
@@ -31,9 +42,6 @@ window.CarnageGame.Entity = class
     y0 = ((@y + ya) - @yr) >> 5
     y1 = ((@y + ya) + @yr + @tileH) >> 5
 
-    $('#debug').text "x0: #{x0}, x1: #{x1}, y0: #{y0}, y1: #{y1}"
-    context = $('canvas#game')[0].getContext '2d'
-    context.fillStyle = 'rgba(255,0,0,0.5)'
     for yt in [y0..y1]
       for xt in [x0..x1]
         tile = @level.getTile(xt, yt)
@@ -47,3 +55,8 @@ window.CarnageGame.Entity = class
 
     @x += xa
     @y += ya
+
+  intersects: (x0, y0, x1, y1) ->
+    if @y + @tileH < y0 or @y > y1 or @x + @tileW < x0 or @x > x1
+      return false
+    return true

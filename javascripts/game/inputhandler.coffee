@@ -19,6 +19,7 @@ window.CarnageGame.InputHandler = class
     down = new CarnageGame.Key()
     right = new CarnageGame.Key()
     left = new CarnageGame.Key()
+    shoot = new CarnageGame.Key()
 
     @mouseX = 0
     @mouseY = 0
@@ -28,12 +29,20 @@ window.CarnageGame.InputHandler = class
       down: down
       right: right
       left: left
+      shoot: shoot
 
     $('canvas#game').mousemove (e) =>
       offset = $('canvas#game').parent().offset()
 
       @mouseX = e.pageX - offset.left
       @mouseY = e.pageY - offset.top
+
+    $(document).mousedown (e) ->
+      shoot.press()
+      return false
+    $(document).mouseup (e) ->
+      shoot.release()
+      return false
 
     $(document).keydown (e) ->
       keyCode = e.keyCode
@@ -62,4 +71,4 @@ window.CarnageGame.InputHandler = class
   isPressed: (id) -> @keys[id]?.isPressed() or false
   getMousePosition: -> { x: @mouseX, y: @mouseY }
   renderCursor: (screen) ->
-    screen.render @mouseX - 16, @mouseY - 16, tileX: 0, tileY: 32 * 3, tileW: 32, tileH: 32
+    screen.render @mouseX - 16, @mouseY - 16, tileX: 0, tileY: 32 * 4, tileW: 32, tileH: 32
